@@ -1,0 +1,530 @@
+/* Global styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Lora:wght@400;500&display=swap');
+
+/* Global font settings */
+body {
+    font-family: 'Lora', serif;
+    overflow: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Header styles */
+.header-image {
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('../images/header-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 3rem;
+}
+
+.header-title {
+    color: #fff;
+    font-size: 3.5rem;
+    text-align: center;
+    max-width: 800px;
+    padding: 0 2rem;
+}
+
+/* Content section styles */
+.content-section {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 3rem;
+}
+
+.content-section h2 {
+    margin-bottom: 2rem;
+    color: #2c3e50;
+}
+
+.chart-wrapper {
+    display: flex;
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.chart-column {
+    flex: 1;
+    min-height: 400px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+/* Stats section styles */
+.stats-section {
+    margin-bottom: 3rem;
+}
+
+.stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.stat-card {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+}
+
+.stat-card:hover {
+    transform: translateY(-5px);
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2c3e50;
+    margin: 1rem 0;
+}
+
+.stat-description {
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* Footer styles */
+footer {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.source p {
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.source ul {
+    list-style: none;
+}
+
+.source a {
+    color: #3498db;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.source a:hover {
+    color: #2980b9;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .chart-wrapper {
+        flex-direction: column;
+    }
+    
+    .header-title {
+        font-size: 2.5rem;
+    }
+    
+    .container {
+        padding: 1rem;
+    }
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+/* Page container styles */
+.page-container {
+    height: 100vh;
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    position: relative;
+    opacity: 0; /* 初始隐藏 */
+    transition: opacity 0.3s;
+}
+
+/* Individual page styles */
+.page {
+    height: 100vh;
+    scroll-snap-align: start;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    border: none;
+}
+
+/* Content wrapper styles for full-screen effect */
+.content-wrapper {
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    background-color: white;
+    box-shadow: none;
+    border: none;
+}
+
+/* Scroll hint styles */
+.scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    text-align: center;
+    color: white;
+}
+
+.arrow-down {
+    width: 20px;
+    height: 20px;
+    border-right: 2px solid white;
+    border-bottom: 2px solid white;
+    transform: rotate(45deg);
+    margin: 20px auto;
+    animation: bounce 2s infinite;
+}
+
+/* Navigation dots styles */
+.page-nav {
+    position: fixed;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+}
+
+.page-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.page-nav li {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.3);
+    margin: 10px 0;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+/* 当第一个导航点处于活跃状态时，所有导航点显示为白色 */
+.page-nav li:first-child.active ~ li,
+.page-nav li:first-child.active {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* 当第一个导航点处于活跃状态时，当前活跃的导航点显示为纯白色 */
+.page-nav li.active {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+
+.page-nav li:first-child.active,
+.page-nav li:first-child.active ~ li.active {
+    background-color: white;
+}
+
+/* First page specific styles */
+#page1 {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    scroll-snap-align: start;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+/* Background image styles */
+.parallax-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.background-image {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/University-Collage.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: -1; /* Ensure it is behind all content */
+}
+
+/* Title box styles */
+#page1 .title-box {
+    position: relative;
+    background-color: white;
+    border: 2px solid black;
+    padding: 40px;
+    text-align: center;
+    max-width: 90%;
+    width: auto;
+    z-index: 2;
+    opacity: 0; /* 初始隐藏 */
+    transition: opacity 0.3s;
+}
+
+/* Title styles */
+.main-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 64px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: #333;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    line-height: 1.2;
+    color: #333;
+    font-weight: 400;
+}
+
+/* Chart container styles */
+.chart-container {
+    width: 100%;
+    height: 70vh;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .title-box {
+        padding: 20px;
+    }
+    
+    .main-title {
+        font-size: 36px;
+    }
+    
+    .subtitle {
+        font-size: 24px;
+    }
+}
+
+#page2 {
+    background-color: #fff;
+}
+
+.topic-title {
+    font-size: 3.5rem;
+    color: #333;
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.text-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.large-text {
+    font-size: 2rem;
+    line-height: 1.4;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+.medium-text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 2rem;
+    color: #666;
+}
+
+.text-content p {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.text-content p.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+.page-nav li {
+    background: rgba(0, 0, 0, 0.3);
+}
+
+.page-nav li.active {
+    background: #000;
+}
+
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateY(0) rotate(45deg);
+    }
+    40% {
+        transform: translateY(-10px) rotate(45deg);
+    }
+    60% {
+        transform: translateY(-5px) rotate(45deg);
+    }
+}
+
+.main-title {
+    font-size: 64px;
+    line-height: 1.2;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.subtitle {
+    font-size: 48px;
+    line-height: 1.2;
+    color: #333;
+}
+
+
+.page-dots {
+    position: fixed;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 3;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #ccc;
+    cursor: pointer;
+}
+
+.dot.active {
+    background-color: #333;
+}
+
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Playfair Display', serif;
+}
+
+#page3 {
+    background-color: #ffffff;
+}
+
+#page4 {
+    background-color: #f8f9fa;
+}
+
+/* Content wrapper styles for full-screen effect on pages 4, 5, and 6 */
+#page4 .content-wrapper,
+#page5 .content-wrapper,
+#page6 .content-wrapper {
+    all: unset; 
+    display: block; 
+}
+
+/* Keep the last page unchanged */
+#page7 .content-wrapper {
+    /* Add any specific styles for the last page here if needed */
+}
+
+#page4 .content-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white; 
+    box-shadow: none; 
+    border-radius: 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#page5 .content-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white; 
+    box-shadow: none; 
+    border-radius: 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#page6 .content-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: white; 
+    box-shadow: none; 
+    border-radius: 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+#page7 {
+    position: relative;
+    background-color: rgba(255, 255, 255, 0.8); 
+}
+
+#page7 .content-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 20px;
+    background-color: transparent; 
+    box-shadow: none; 
+    border-radius: 0; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: none; 
+}

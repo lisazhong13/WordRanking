@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University Rankings Analysis</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <!-- Continuous background image -->
+    <div class="background-image"></div>
+
+    <div class="page-container">
+        <!-- Page 1: Title Page -->
+        <section class="page" id="page1">
+            <div class="parallax-wrapper">
+                <div class="background-image"></div>
+            </div>
+            <div class="title-box">
+                <h1 class="main-title">How to choose your university</h1>
+                <h2 class="subtitle">and their ranking</h2>
+            </div>
+        </section>
+
+        <!-- Page 2: Content Page -->
+        <section class="page" id="page2">
+            <div class="content-wrapper">
+                <h1 class="main-title">Introduction</h1>
+            </div>
+        </section>
+
+        <!-- Page 3: Content Page -->
+        <section class="page" id="page3">
+            <div class="content-wrapper">
+                <h1 class="main-title">Introduction 2</h1>
+            </div>
+        </section>
+
+        <!-- Page 4: World Map -->
+        <section class="page" id="page4">
+            <div class="content-wrapper">
+                <div id="worldmap-chart"></div>
+            </div>
+        </section>
+
+        <!-- Page 5: Timeline -->
+        <section class="page" id="page5">
+            <div class="content-wrapper">
+                <div id="timeline-chart"></div>
+            </div>
+        </section>
+
+        <!-- Page 6: Scatterplot -->
+        <section class="page" id="page6">
+            <div class="content-wrapper">
+                <div id="scatterplot-chart"></div>
+            </div>
+        </section>
+
+        <!-- Page 7: End Page -->
+        <section class="page" id="page7">
+            <div class="content-wrapper">
+                <h1 class="main-title">The end</h1>
+            </div>
+        </section>
+
+        <!-- Navigation Indicators -->
+        <nav class="page-nav">
+            <ul>
+                <li class="active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ul>
+        </nav>
+    </div>
+
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="js/worldmap.js"></script>
+    <script src="js/timline.js"></script>
+    <script src="js/scatterplot.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html> 
