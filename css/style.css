@@ -528,3 +528,30 @@ h1, h2, h3, h4, h5, h6 {
     align-items: center;
     border: none; 
 }
+
+.score-selector {
+    cursor: move;
+}
+
+.score-selector[draggable="false"] {
+    cursor: default;
+}
+
+.axis-selector {
+    pointer-events: none;
+}
+
+.x-axis line,
+.y-axis line {
+    stroke: #000000;
+}
+
+.x-axis path,
+.y-axis path {
+    stroke: #666;
+}
+
+.x-axis text,
+.y-axis text {
+    font-size: 12px;
+}
