@@ -174,17 +174,11 @@ function setupIntersectionObserver() {
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // Initialize appropriate chart based on page ID
-                const id = entry.target.id;
-                if (id === 'page4' && worldMap) {
-                    worldMap.render();
-                } else if (id === 'page5' && timeline) {
-                    timeline.render();
-                } else if (id === 'page6' && scatterplot) {
+                console.log("16. Page intersecting:", entry.target.id);
+                if (entry.target.id === 'page6' && scatterplot) {
+                    console.log("17. Triggering scatterplot render");
                     scatterplot.render();
                 }
-                // Stop observing after initialization
-                observer.unobserve(entry.target);
             }
         });
     }, options);
