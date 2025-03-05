@@ -1,5 +1,4 @@
-// feel free to change any part of the code
-class WorldMap {
+class Timeline {
     constructor(containerId, data) {
         this.containerId = containerId;
         this.data = data;
@@ -8,6 +7,7 @@ class WorldMap {
 
     initVis() {
 
+
         // Initialize visualization
         this.render();
     }
@@ -15,4 +15,4 @@ class WorldMap {
     render() {
         
     }
-}
+} 
