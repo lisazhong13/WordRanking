@@ -5,19 +5,95 @@ const yearParser = d3.timeParse("%Y");
 // Global visualization instances
 let worldMap, timeline, scatterplot;
 
-// (1) Load data with promises
-let promises = [
-    d3.csv("data/2011_2024_rankings_cleaned.csv")
-];
+// Initialize visualizations
+let radarChart;
+let barChart;
 
-Promise.all(promises)
-    .then(function (data) {
-        console.log("Raw data loaded:", data);
-        createVis(data)
-    })
-    .catch(function (err) {
-        console.error("Error loading data:", err)
-    });
+// Wait for DOM to be ready
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM loaded, starting data load...");
+    
+    // (1) Load data with promises
+    d3.csv("data/2011_2024_rankings_cleaned.csv")
+        .then(function(data) {
+            console.log("Raw data loaded:", data.slice(0, 5));
+            
+            // Process the data
+            const processedData = data.map(d => ({
+                rank_order: +d.rank_order || 0,
+                rank: +d.rank || 0,
+                name: d.name,
+                scores_overall: +d.scores_overall || 0,
+                scores_teaching: +d.scores_teaching || 0,
+                scores_research: +d.scores_research || 0,
+                scores_citations: +d.scores_citations || 0,
+                scores_industry_income: +d.scores_industry_income || 0,
+                scores_international_outlook: +d.scores_international_outlook || 0,
+                location: d.location,
+                year: +d.year || 0
+            })).filter(d => 
+                d.year > 0 && 
+                !isNaN(d.rank) && 
+                !isNaN(d.scores_overall) &&
+                d.name && 
+                d.location
+            );
+
+            console.log("Processed data sample:", processedData.slice(0, 5));
+            console.log("Total universities:", processedData.length);
+
+            try {
+                // Create visualization instances
+                console.log("Initializing charts...");
+                
+                // Initialize only if the classes are defined
+                if (typeof WorldMap === 'function') {
+                    console.log("Creating world map...");
+                    worldMap = new WorldMap("worldmap-chart", processedData);
+                }
+
+                if (typeof Timeline === 'function') {
+                    console.log("Creating timeline...");
+                    timeline = new Timeline("timeline-chart", processedData);
+                }
+
+                if (typeof Scatterplot === 'function') {
+                    console.log("Creating scatterplot...");
+                    scatterplot = new Scatterplot("scatterplot-chart", processedData);
+                }
+
+                // Initialize radar and bar charts (these are required)
+                console.log("Creating radar chart...");
+                radarChart = new RadarChart('radar-chart', processedData);
+                
+                console.log("Creating bar chart...");
+                barChart = new BarChart('bar-chart', processedData);
+
+                // Initial update of bar chart with default values
+                console.log("Updating bar chart with default values...");
+                barChart.updateChart('United States');
+
+                // Set up event listeners for university selection
+                document.addEventListener('universitySelected', (event) => {
+                    console.log("University selected:", event.detail);
+                    if (radarChart) {
+                        radarChart.updateChart(event.detail);
+                    }
+                });
+
+                // Set up page navigation and intersection observer
+                setupPageNavigation();
+                setupIntersectionObserver();
+                
+                console.log("Initialization complete!");
+            } catch (error) {
+                console.error("Error during chart initialization:", error);
+            }
+        })
+        .catch(function(error) {
+            console.error("Error loading data:", error);
+        });
+});
 
 function createVis(data) {
     let rankingData = data[0];
@@ -75,12 +151,26 @@ function createVis(data) {
         return;
     }
 
-    // (3) Create visualization instances
+    // Create visualization instances
     worldMap = new WorldMap("worldmap-chart", rankingData);
     timeline = new Timeline("timeline-chart", rankingData);
     scatterplot = new Scatterplot("scatterplot-chart", rankingData);
 
-    // (4) Set up page navigation and intersection observer
+    // Initialize radar and bar charts
+    radarChart = new RadarChart('radar-chart', rankingData);
+    barChart = new BarChart('bar-chart', rankingData);
+
+    // Initial update of bar chart with default values
+    barChart.updateChart('United States');
+
+    // Set up event listeners for university selection
+    document.addEventListener('universitySelected', (event) => {
+        if (radarChart) {
+            radarChart.updateChart(event.detail);
+        }
+    });
+
+    // Set up page navigation and intersection observer
     setupPageNavigation();
     setupIntersectionObserver();
 }

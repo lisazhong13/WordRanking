@@ -39,7 +39,27 @@
         <!-- Page 4: World Map -->
         <section class="page" id="page4">
             <div class="content-wrapper">
-                <div id="worldmap-chart"></div>
+                <div class="map-charts-grid">
+                    <div id="worldmap-chart"></div>
+                    <div class="right-charts">
+                        <div id="radar-chart">
+                            <canvas id="radar-chart-canvas"></canvas>
+                        </div>
+                        <div class="bar-chart-container">
+                            <div class="filter-container">
+                                <select id="rank-range-filter">
+                                    <option value="1-5">Rank 1-5</option>
+                                    <option value="6-10">Rank 6-10</option>
+                                    <option value="11-15">Rank 11-15</option>
+                                    <option value="16-20">Rank 16-20</option>
+                                </select>
+                            </div>
+                            <div id="bar-chart">
+                                <canvas id="bar-chart-canvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -79,9 +99,12 @@
     </div>
 
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/worldmap.js"></script>
-    <script src="js/timline.js"></script>
+    <script src="js/timeline.js"></script>
     <script src="js/scatterplot.js"></script>
+    <script src="js/radar.js"></script>
+    <script src="js/barchart.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html> 
