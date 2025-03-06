@@ -248,16 +248,6 @@ html, body {
     background-color: white;
 }
 
-/* When page 3 is active, all navigation dots become semi-transparent white */
-body:has(.page-nav li[data-page="2"].active) .page-nav li /* When page 3 is active, select all navigation dots */ {
-    background-color: rgba(255, 255, 255, 0.7);
-}
-
-/* When page 3 is active, the third navigation dot becomes fully white */
-body:has(.page-nav li[data-page="2"].active) .page-nav li[data-page="2"] /* The navigation dot for page 3 becomes fully white */ {
-    background-color: rgba(255, 255, 255, 1) !important; /* Use higher priority */
-}
-
 /* First page specific styles */
 #page1 {
     position: relative;
