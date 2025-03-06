@@ -125,6 +125,7 @@ function setupPageNavigation() {
      */
     function updateActiveDot() {
         navDots.forEach((dot, index) => {
+            dot.setAttribute('data-page', index);
             dot.classList.toggle('active', index === currentPage);
         });
     }
@@ -165,14 +166,43 @@ function setupPageNavigation() {
  */
 function setupIntersectionObserver() {
     const options = {
-        root: null,        // Use viewport as root
-        rootMargin: '0px', // No margin
-        threshold: 0.1     // Trigger when 10% visible
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.3
     };
 
-    // Create intersection observer
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            if (entry.target.id === 'page2') {
+                const imageContainer = document.querySelector('.intro-image-container');
+                const textContainer = document.querySelector('.intro-text-container');
+                
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        imageContainer.classList.add('slide-in');
+                    }, 300);
+                    setTimeout(() => {
+                        textContainer.classList.add('slide-in');
+                    }, 600);
+                } else {
+                    imageContainer.classList.remove('slide-in');
+                    textContainer.classList.remove('slide-in');
+                }
+            }
+            
+            if (entry.target.id === 'page3') {
+                const container = document.querySelector('.question-image-container');
+                const image = document.querySelector('.question-image');
+                
+                if (entry.isIntersecting) {
+                    container.classList.add('animate');
+                    image.classList.add('animate');
+                } else {
+                    container.classList.remove('animate');
+                    image.classList.remove('animate');
+                }
+            }
+            
             if (entry.isIntersecting) {
                 console.log("16. Page intersecting:", entry.target.id);
                 if (entry.target.id === 'page6' && scatterplot) {
