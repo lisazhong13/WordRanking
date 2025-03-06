@@ -462,6 +462,40 @@ h1, h2, h3, h4, h5, h6 {
     display: block; 
 }
 
+.page4-container {
+    display: flex;
+    justify-content: space-between; /* Ensures left and right sections */
+    align-items: flex-start;
+    width: 100%;
+    height: 100vh;
+    padding: 20px;
+}
+
+/* Adjust the left panel styles */
+.page4-left {
+    flex: 0 0 50%; /* Set a fixed width for the world map (50% of the container) */
+    min-width: 800px; /* Set a minimum width for the world map */
+    height: 100%; /* Ensure it takes the full height of the section */
+}
+
+/* Adjust the right charts container */
+.page4-right {
+    flex: 1; /* Allow the right charts to take up the remaining space */
+    display: flex;
+    flex-direction: column; /* Stack radar and bar charts vertically */
+    align-items: center; /* Center align the charts */
+}
+
+#radar-chart-container, #bar-chart-container {
+    flex: 1;
+    margin: 10px;
+}
+
+canvas {
+    width: 100%;
+    height: 100%;
+}
+
 /* Keep the last page unchanged */
 #page7 .content-wrapper {
     /* Add any specific styles for the last page here if needed */
@@ -559,11 +593,11 @@ h1, h2, h3, h4, h5, h6 {
 
 /* World Map Visualization Styles */
 #worldmap-chart {
-    width: 100%;
-    height: 80vh;
+    width: 100%; /* Set to 100% of the parent container */
+    height: 80vh; /* Set a larger height for the world map */
     position: relative;
     overflow: hidden;
-    margin: 0 auto;
+    margin: 0; /* Remove margin to reduce white space */
 }
 
 /* Adjust the title for the worldmap page */
@@ -719,4 +753,32 @@ h1, h2, h3, h4, h5, h6 {
     top: 0;
     height: 100%;
     transition: width 0.5s ease;
+}
+
+/* Add this to your CSS file */
+.map-charts-grid {
+    display: flex; /* Use flexbox for layout */
+}
+
+.right-charts {
+    flex: 1; /* Allow the right charts to take up available space */
+    display: flex;
+    flex-direction: column; /* Stack radar and bar charts vertically */
+}
+
+#radar-chart-container, #bar-chart-container {
+    flex: 1; /* Allow each chart container to take equal space */
+    margin: 10px; /* Add some margin for spacing */
+}
+
+/* Add this to your CSS file */
+#bar-chart-container {
+    max-height: 400px; /* Set a maximum height for the bar chart */
+    overflow-y: auto; /* Allow vertical scrolling if content exceeds max height */
+    margin: 10px; /* Add some margin for spacing */
+}
+
+#bar-chart-canvas {
+    width: 100%; /* Ensure the canvas takes the full width of the container */
+    height: auto; /* Maintain aspect ratio */
 }

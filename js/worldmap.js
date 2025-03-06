@@ -25,6 +25,7 @@ class WorldMap {
         this.locationData = {};
         
         this.data.forEach(d => {
+            console.log(`Processing university: ${d.name}, Year: ${d.year}`); // Log each university's year
             if (!d.location) return;
             
             if (!this.locationData[d.location]) {
@@ -298,7 +299,10 @@ class WorldMap {
                         // Find matching location in our data
                         const countryName = d.properties.name;
                         let matchedLocation = null;
-                        
+
+                        // Log the clicked country name
+                        console.log(`Clicked country: ${countryName}`);
+
                         // Try to match with our location data
                         Object.values(vis.locationData).forEach(location => {
                             if (location.name === countryName || 
@@ -308,24 +312,22 @@ class WorldMap {
                                 matchedLocation = location;
                             }
                         });
-                        
+
+                        // Log the matched location data
                         if (matchedLocation) {
-                            // Update the left panel with the location information
-                            vis.updateLeftPanel(matchedLocation);
-                            
-                            // Log data to console
-                            console.log(`Country: ${matchedLocation.name}`);
-                            console.log(`Universities: ${matchedLocation.universities.length}`);
-                            console.log(`Overall Score: ${matchedLocation.scores_overall}`);
-                            console.log(`Teaching Score: ${matchedLocation.scores_teaching}`);
-                            console.log(`International Outlook Score: ${matchedLocation.scores_international_outlook}`);
-                            console.log(`Industry Income Score: ${matchedLocation.scores_industry_income}`);
-                            console.log(`Research Score: ${matchedLocation.scores_research}`);
-                            console.log(`Citations Score: ${matchedLocation.scores_citations}`);
-                            console.log(`Universities: ${matchedLocation.universities.join(', ')}`);
+                            console.log(`Matched location data:`, matchedLocation);
+
+                            // Update the bar chart with top 5 universities
+                            const topUniversities = matchedLocation.universities.slice(0, 5);
+                            console.log(`Top universities for ${countryName}:`, topUniversities);
+                            barChart.updateChart(matchedLocation.name); // Pass the country name instead of universities
+
+                            // Update the radar chart with the top university
+                            const topUniversity = matchedLocation.universities[0];
+                            console.log(`Top university for radar chart:`, topUniversity);
+                            radarChart.updateChart(topUniversity); // Assuming the first university is the top one
                         } else {
-                            // Hide the left panel if no data is available
-                            vis.leftPanel.style("opacity", "0");
+                            console.warn(`No matching location found for ${countryName}`);
                         }
                     });
                 
