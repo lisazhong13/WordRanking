@@ -10,8 +10,8 @@ class WorldMap {
         this.width = this.container.clientWidth - this.margin.left - this.margin.right;
         this.height = this.container.clientHeight - this.margin.top - this.margin.bottom;
         
-        // Define color categories
-        this.colors = ["#f9e8dd", "#f0b8a8", "#d6604d", "#b30000"];
+        // Define a softer red color palette that's visually comfortable
+        this.colors = ["#fff5f0", "#fee0d2", "#fcbba1", "#fc9272", "#fb6a4a", "#ef3b2c", "#cb181d", "#a50f15", "#67000d"];
         
         // Process data by location
         this.processData();
@@ -61,7 +61,11 @@ class WorldMap {
         this.minScore = d3.min(this.locationArray, d => d.scores_overall);
         this.maxScore = d3.max(this.locationArray, d => d.scores_overall);
         
+        // Calculate average score for reference
+        this.avgScore = d3.mean(this.locationArray, d => d.scores_overall);
+        
         console.log("Processed location data:", this.locationArray);
+        console.log("Min score:", this.minScore, "Max score:", this.maxScore, "Avg score:", this.avgScore);
         
         // Create a lookup table for country data
         this.wrangleData();
@@ -114,9 +118,16 @@ class WorldMap {
         // Create tooltip
         vis.tooltip = d3.select("#worldmap-tooltip");
         
-        // Create color scale
-        vis.colorScale = d3.scaleQuantize()
+        // Create a custom power scale to better differentiate between high values
+        // Using a square root scale helps to spread out the lower values while still showing differences at the top
+        vis.colorScale = d3.scalePow()
+            .exponent(0.3) // Using an exponent less than 1 gives more visual space to lower values
             .domain([0, vis.maxScore])
+            .range([0, 1]);
+        
+        // Create a color interpolator that maps the normalized values to colors
+        vis.colorInterpolator = d3.scaleQuantize()
+            .domain([0, 1])
             .range(vis.colors);
         
         // Create projection
@@ -181,9 +192,11 @@ class WorldMap {
                         });
                         
                         if (matchedLocation) {
-                            return vis.colorScale(matchedLocation.scores_overall);
+                            // Apply the power scale to get a normalized value, then map to color
+                            const normalizedValue = vis.colorScale(matchedLocation.scores_overall);
+                            return vis.colorInterpolator(normalizedValue);
                         } else {
-                            return "#f9e8dd"; // Default light color
+                            return "#f7f4f9"; // Default lightest color
                         }
                     })
                     .attr("stroke", "#fff")
@@ -210,20 +223,10 @@ class WorldMap {
                         
                         // Show tooltip
                         if (matchedLocation) {
-                            // Determine category based on score
-                            let category = "category_1";
+                            // Get normalized value for reference
                             const score = matchedLocation.scores_overall;
-                            
-                            if (score > vis.maxScore * 0.75) {
-                                category = "category_4";
-                            } else if (score > vis.maxScore * 0.5) {
-                                category = "category_3";
-                            } else if (score > vis.maxScore * 0.25) {
-                                category = "category_2";
-                            }
-                            
-                            // Get color hex
-                            const color = vis.colorScale(score);
+                            const normalizedValue = vis.colorScale(score);
+                            const percentOfMax = (score / vis.maxScore * 100).toFixed(1);
                             
                             vis.tooltip
                                 .style("opacity", 1)
@@ -231,10 +234,9 @@ class WorldMap {
                                 .style("top", (event.pageY + 10) + "px")
                                 .html(`
                                     <h3>${matchedLocation.name}</h3>
-                                    <p>Name: ${matchedLocation.name}</p>
-                                    <p>Category: ${category}</p>
-                                    <p>Color: ${color}</p>
-                                    <p>Value: ${matchedLocation.scores_overall.toFixed(2)}</p>
+                                    <p>Universities: ${matchedLocation.universities.length}</p>
+                                    <p>Overall Score: ${matchedLocation.scores_overall.toFixed(0)}</p>
+                                    <p>Percent of Max: ${percentOfMax}%</p>
                                 `);
                         } else {
                             vis.tooltip
@@ -304,14 +306,22 @@ class WorldMap {
             .attr('class', 'legend')
             .attr('transform', `translate(${vis.width * 3 / 4}, ${vis.height - 30})`);
         
-        // Create legend scale
+        // Create sample points for the legend
+        const samplePoints = [];
+        for (let i = 0; i <= 8; i++) {
+            samplePoints.push(vis.maxScore * Math.pow(i/8, 1/0.3));
+        }
+        
+        // Create legend scale with power scale
         const legendScale = d3.scaleLinear()
-            .domain([0, 100])
+            .domain([0, vis.maxScore])
             .range([0, 200]);
         
-        // Create legend axis
+        // Create legend axis with custom tick values
         const legendAxis = d3.axisBottom(legendScale)
-            .tickValues([0, 50, 100])
+            .tickValues([0, Math.round(vis.maxScore * 0.1), Math.round(vis.maxScore * 0.25), 
+                         Math.round(vis.maxScore * 0.5), Math.round(vis.maxScore)])
+            .tickFormat(d3.format(",d"))
             .tickSize(0);
         
         // Create legend rectangles
