@@ -479,6 +479,7 @@ h1, h2, h3, h4, h5, h6 {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    position: relative;
 }
 
 #page5 .content-wrapper {
@@ -644,19 +645,24 @@ h1, h2, h3, h4, h5, h6 {
 /* Left panel styles for country information */
 .left-panel {
     z-index: 10;
-    max-height: 70vh;
-    overflow-y: auto;
     transition: opacity 0.3s ease, transform 0.3s ease;
-    position: absolute;
+    position: fixed;
     left: 30px !important;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
+    top: 100px !important;
+    transform: none !important;
     background-color: rgba(255, 255, 255, 0.95);
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     padding: 20px;
     width: 30%;
     max-width: 400px;
+    display: none;
+    opacity: 0;
+}
+
+/* Only show the left panel when page 4 is in view */
+.page-container.page4-active .left-panel {
+    display: block;
 }
 
 .panel-title {

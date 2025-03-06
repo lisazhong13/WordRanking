@@ -129,11 +129,11 @@ class WorldMap {
         
         // Create left panel for country details
         // First, check if the left panel already exists
-        let leftPanelExists = d3.select(".left-panel").size() > 0;
+        let leftPanelExists = d3.select("#page4 .content-wrapper .left-panel").size() > 0;
         
         if (!leftPanelExists) {
             // Create the left panel if it doesn't exist
-            vis.leftPanel = d3.select("body")
+            vis.leftPanel = d3.select("#page4 .content-wrapper")
                 .append("div")
                 .attr("class", "left-panel")
                 .style("opacity", "0");  // Initially hidden
@@ -147,7 +147,7 @@ class WorldMap {
                 .attr("class", "score-container");
         } else {
             // If it exists, just select it
-            vis.leftPanel = d3.select(".left-panel");
+            vis.leftPanel = d3.select("#page4 .content-wrapper .left-panel");
             vis.scoreContainer = vis.leftPanel.select(".score-container");
         }
         
@@ -431,7 +431,7 @@ class WorldMap {
         // Add university count
         vis.scoreContainer.append("div")
             .attr("class", "university-count")
-            .style("margin-bottom", "20px")
+            .style("margin-bottom", "15px")
             .style("font-size", "18px")
             .style("font-weight", "bold")
             .html(`<span style="color: #333;">Universities:</span> <span style="color: #cb181d;">${location.universities.length}</span>`);
@@ -439,7 +439,7 @@ class WorldMap {
         // Add overall score
         vis.scoreContainer.append("div")
             .attr("class", "overall-score")
-            .style("margin-bottom", "20px")
+            .style("margin-bottom", "15px")
             .style("font-size", "18px")
             .style("font-weight", "bold")
             .html(`<span style="color: #333;">Overall Score:</span> <span style="color: #cb181d;">${location.scores_overall.toFixed(0)}</span>`);
@@ -448,7 +448,7 @@ class WorldMap {
         const percentOfMax = (location.scores_overall / vis.maxScore * 100).toFixed(1);
         vis.scoreContainer.append("div")
             .attr("class", "percent-max")
-            .style("margin-bottom", "30px")
+            .style("margin-bottom", "20px")
             .style("font-size", "18px")
             .style("font-weight", "bold")
             .html(`<span style="color: #333;">Percent of Max:</span> <span style="color: #cb181d;">${percentOfMax}%</span>`);
@@ -456,7 +456,7 @@ class WorldMap {
         // Add a title for the detailed scores
         vis.scoreContainer.append("h3")
             .style("margin-top", "0")
-            .style("margin-bottom", "15px")
+            .style("margin-bottom", "10px")
             .style("font-size", "18px")
             .text("Detailed Scores");
         
@@ -465,7 +465,7 @@ class WorldMap {
             .attr("class", "score-bars")
             .style("display", "flex")
             .style("flex-direction", "column")
-            .style("gap", "15px");
+            .style("gap", "10px");
         
         // Add each metric as a score bar
         metrics.forEach(metric => {
@@ -473,7 +473,7 @@ class WorldMap {
                 .attr("class", "score-bar")
                 .style("display", "flex")
                 .style("flex-direction", "column")
-                .style("gap", "5px");
+                .style("gap", "3px");
             
             // Add the metric name and score
             scoreBar.append("div")
@@ -511,8 +511,8 @@ class WorldMap {
         vis.leftPanel
             .style("opacity", "1")
             .style("left", "30px")
-            .style("top", "50%")
-            .style("transform", "translateY(-50%)")
+            .style("top", "100px")
+            .style("transform", "none")
             .style("z-index", "100");
     }
 }

@@ -175,6 +175,15 @@ function setupIntersectionObserver() {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 console.log("16. Page intersecting:", entry.target.id);
+                
+                // Add class to page container when page 4 is active
+                const pageContainer = document.querySelector('.page-container');
+                if (entry.target.id === 'page4') {
+                    pageContainer.classList.add('page4-active');
+                } else {
+                    pageContainer.classList.remove('page4-active');
+                }
+                
                 if (entry.target.id === 'page6' && scatterplot) {
                     console.log("17. Triggering scatterplot render");
                     scatterplot.render();
