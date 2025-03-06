@@ -39,7 +39,10 @@
         <!-- Page 4: World Map -->
         <section class="page" id="page4">
             <div class="content-wrapper">
+                <h1 class="main-title">Global University Rankings</h1>
                 <div id="worldmap-chart"></div>
+                <div id="worldmap-tooltip" class="tooltip"></div>
+                <div id="worldmap-legend"></div>
             </div>
         </section>
 
@@ -79,6 +82,9 @@
     </div>
 
     <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://d3js.org/d3-geo.v2.min.js"></script>
+    <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+    <script src="https://unpkg.com/topojson-client@3"></script>
     <script src="js/worldmap.js"></script>
     <script src="js/timeline.js"></script>
     <script src="js/scatterplot.js"></script>
