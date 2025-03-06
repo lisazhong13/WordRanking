@@ -159,7 +159,7 @@ html, body {
     overflow-y: auto;
     scroll-snap-type: y mandatory;
     position: relative;
-    opacity: 0; /* 初始隐藏 */
+    opacity: 0; /* Initial hidden */
     transition: opacity 0.3s;
 }
 
@@ -234,13 +234,11 @@ html, body {
     transition: background-color 0.3s;
 }
 
-/* 当第一个导航点处于活跃状态时，所有导航点显示为白色 */
 .page-nav li:first-child.active ~ li,
 .page-nav li:first-child.active {
     background-color: rgba(255, 255, 255, 0.7);
 }
 
-/* 当第一个导航点处于活跃状态时，当前活跃的导航点显示为纯白色 */
 .page-nav li.active {
     background-color: rgba(0, 0, 0, 0.7);
 }
@@ -248,6 +246,16 @@ html, body {
 .page-nav li:first-child.active,
 .page-nav li:first-child.active ~ li.active {
     background-color: white;
+}
+
+/* When page 3 is active, all navigation dots become semi-transparent white */
+body:has(.page-nav li[data-page="2"].active) .page-nav li /* When page 3 is active, select all navigation dots */ {
+    background-color: rgba(255, 255, 255, 0.7);
+}
+
+/* When page 3 is active, the third navigation dot becomes fully white */
+body:has(.page-nav li[data-page="2"].active) .page-nav li[data-page="2"] /* The navigation dot for page 3 becomes fully white */ {
+    background-color: rgba(255, 255, 255, 1) !important; /* Use higher priority */
 }
 
 /* First page specific styles */
@@ -293,7 +301,7 @@ html, body {
     max-width: 90%;
     width: auto;
     z-index: 2;
-    opacity: 0; /* 初始隐藏 */
+    opacity: 0; /* Initial hidden */
     transition: opacity 0.3s;
 }
 
@@ -340,8 +348,114 @@ html, body {
     }
 }
 
+/* Page 2 styles */
 #page2 {
-    background-color: #fff;
+    background: linear-gradient(to right, #ffffff, #f8f9fa);
+    position: relative;
+    overflow: hidden;
+}
+
+.intro-container {
+    display: flex;
+    width: 100%;
+    max-width: 1600px;
+    gap: 80px;
+    align-items: center;
+    padding: 0 80px;
+    position: relative;
+}
+
+.intro-image-container {
+    flex: 1;
+    position: relative;
+    transform: translateX(-100px);
+    opacity: 0;
+    transition: all 1s ease-out;
+}
+
+.intro-text-container {
+    flex: 1;
+    transform: translateX(100px);
+    opacity: 0;
+    transition: all 1s ease-out;
+}
+
+.intro-image {
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.intro-image:hover {
+    transform: scale(1.02);
+}
+
+.intro-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    color: #2c3e50;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+.intro-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: #3498db;
+    transition: width 0.3s ease;
+}
+
+.intro-title:hover::after {
+    width: 100px;
+}
+
+.intro-text {
+    font-family: 'Lora', serif;
+    font-size: 20px;
+    line-height: 1.8;
+    color: #34495e;
+    position: relative;
+    padding-left: 20px;
+    border-left: 3px solid #e74c3c;
+    margin-bottom: 20px;
+}
+
+/* Animation classes */
+.slide-in {
+    opacity: 1 !important;
+    transform: translateX(0) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+    .intro-container {
+        flex-direction: column;
+        padding: 0 40px;
+        gap: 40px;
+    }
+
+    .intro-image-container,
+    .intro-text-container {
+        transform: translateY(50px);
+    }
+
+    .intro-image {
+        max-width: 100%;
+    }
+
+    .intro-title {
+        font-size: 32px;
+    }
+
+    .intro-text {
+        font-size: 18px;
+    }
 }
 
 .topic-title {
@@ -382,7 +496,6 @@ html, body {
     transform: translateY(0);
 }
 
-
 .page-nav li {
     background: rgba(0, 0, 0, 0.3);
 }
@@ -390,7 +503,6 @@ html, body {
 .page-nav li.active {
     background: #000;
 }
-
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
@@ -417,7 +529,6 @@ html, body {
     color: #333;
 }
 
-
 .page-dots {
     position: fixed;
     right: 30px;
@@ -441,13 +552,78 @@ html, body {
     background-color: #333;
 }
 
-
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;
 }
 
+/* Page 3 styles */
 #page3 {
-    background-color: #ffffff;
+    background-color: transparent;
+    background-color: rgba(255, 255, 255, 0.2); /* Reduce opacity from 0.8 to 0.6 */
+}
+
+#page3 .content-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    padding: 40px;
+}
+
+.question-image-container {
+    width: 78%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 10px 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    border: 3px solid black;
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+}
+
+.question-image {
+    width: 100%;
+    height: auto;
+    max-height: 80vh;
+    object-fit: contain;
+    opacity: 0;
+    transform: scale(0.98);
+}
+
+/* Add animation class */
+.question-image-container.animate {
+    animation: containerReveal 1s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.question-image.animate {
+    animation: imageReveal 1s cubic-bezier(0.4, 0, 0.2, 1) 0.3s forwards;
+}
+
+@keyframes containerReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.95) translateY(20px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+@keyframes imageReveal {
+    0% {
+        opacity: 0;
+        transform: scale(0.98);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 #page4 {
@@ -565,3 +741,4 @@ h1, h2, h3, h4, h5, h6 {
 .y-axis text {
     font-size: 12px;
 }
+
