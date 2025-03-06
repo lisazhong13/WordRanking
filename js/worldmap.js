@@ -104,14 +104,17 @@ class WorldMap {
     initVis() {
         const vis = this;
         
-        // Modify the page title - make it smaller and move it to top-left
+        // Modify the page title - make it smaller and move it to the center top
         d3.select("#page4 .main-title")
             .text("Global University Rankings")
             .style("font-size", "36px")  // Smaller font size
             .style("position", "absolute")
             .style("top", "20px")
-            .style("left", "20px")
-            .style("margin", "0");
+            .style("left", "50%")
+            .style("transform", "translateX(-50%)")
+            .style("margin", "0")
+            .style("text-align", "center")
+            .style("width", "100%");
         
         // Create SVG drawing area
         vis.svg = d3.select("#" + vis.containerId)
