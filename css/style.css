@@ -559,31 +559,41 @@ h1, h2, h3, h4, h5, h6 {
 /* Page 3 styles */
 #page3 {
     background-color: transparent;
-    background-color: rgba(255, 255, 255, 0.2); /* Reduce opacity from 0.8 to 0.6 */
+    transition: background-color 0.5s ease;
+    position: relative;
+}
+
+#page3.white-background {
+    background-color: white;
 }
 
 #page3 .content-wrapper {
     width: 100%;
     height: 100%;
+    max-width: 1600px;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    padding: 40px;
+    padding: 0 80px;
+    position: relative;
+    background: #ffffff;  
 }
 
 .question-image-container {
-    width: 78%;
+    width: 85%;
     max-width: 1000px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: white;
-    padding: 10px 10px;
+    padding: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     border: 3px solid black;
-    opacity: 0;
-    transform: scale(0.95) translateY(20px);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .question-image {
@@ -591,8 +601,49 @@ h1, h2, h3, h4, h5, h6 {
     height: auto;
     max-height: 80vh;
     object-fit: contain;
+    transition: all 0.5s ease;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block !important;
+}
+
+#page3.white-background .question-image-container {
+    width: 45%;
+    left: 6%;
+    transform: translateX(0);
+}
+
+.question-text-container {
     opacity: 0;
-    transform: scale(0.98);
+    position: absolute;
+    right: 5%;
+    width: 40%;
+    padding: 0 20px;
+    display: block;
+    transform: translateX(100px);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+#page3.white-background .question-text-container {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.question-text-container h2 {
+    color: #2c3e50;
+    font-size: 42px;
+    margin-bottom: 30px;
+    margin-left: -25px;
+    font-weight: bold;
+    line-height: 1.2;
+}
+
+.question-text-container p {
+    color: #34495e;
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-weight: 400;
 }
 
 /* Add animation class */
@@ -740,5 +791,27 @@ h1, h2, h3, h4, h5, h6 {
 .x-axis text,
 .y-axis text {
     font-size: 12px;
+}
+
+/* 第三页的装饰线样式 */
+.question-text-container::before {
+    content: '';
+    position: absolute;
+    top: 70px;  /* 调整位置到标题下方 */
+    left: 0px;
+    width: 60px;
+    height: 3px;
+    background: #3498db;
+}
+
+.question-text-container::after {
+    content: '';
+    position: absolute;
+    top: 90px;  /* 调整竖线起始位置 */
+    left: 0px;  /* 将线条放在文字左侧 */
+    width: 3px;   /* 宽度变为4px */
+    height: 300px; /* 高度改为70px，使其成为竖线 */
+    line-height: 1.8;
+    border-left: 3px solid #e74c3c;
 }
 

@@ -191,15 +191,26 @@ function setupIntersectionObserver() {
             }
             
             if (entry.target.id === 'page3') {
+                const page3 = document.getElementById('page3');
                 const container = document.querySelector('.question-image-container');
                 const image = document.querySelector('.question-image');
                 
                 if (entry.isIntersecting) {
-                    container.classList.add('animate');
-                    image.classList.add('animate');
+                    // 确保元素立即可见
+                    container.style.opacity = '1';
+                    container.style.visibility = 'visible';
+                    image.style.opacity = '1';
+                    image.style.visibility = 'visible';
+                    image.style.display = 'block';
+                    
+                    // 1秒后触发白色背景变化
+                    setTimeout(() => {
+                        page3.classList.add('white-background');
+                    }, 1000);
                 } else {
-                    container.classList.remove('animate');
-                    image.classList.remove('animate');
+                    // 离开页面时只重置背景
+                    page3.classList.remove('white-background');
+                    // 不隐藏图片
                 }
             }
             
