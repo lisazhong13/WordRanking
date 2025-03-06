@@ -127,6 +127,30 @@ class WorldMap {
         // Create tooltip
         vis.tooltip = d3.select("#worldmap-tooltip");
         
+        // Create left panel for country details
+        // First, check if the left panel already exists
+        let leftPanelExists = d3.select(".left-panel").size() > 0;
+        
+        if (!leftPanelExists) {
+            // Create the left panel if it doesn't exist
+            vis.leftPanel = d3.select("body")
+                .append("div")
+                .attr("class", "left-panel")
+                .style("opacity", "0");  // Initially hidden
+            
+            // Add panel title
+            vis.leftPanel.append("h2")
+                .attr("class", "panel-title");
+            
+            // Add score container
+            vis.scoreContainer = vis.leftPanel.append("div")
+                .attr("class", "score-container");
+        } else {
+            // If it exists, just select it
+            vis.leftPanel = d3.select(".left-panel");
+            vis.scoreContainer = vis.leftPanel.select(".score-container");
+        }
+        
         // Create a custom power scale to better differentiate between high values
         // Using a square root scale helps to spread out the lower values while still showing differences at the top
         vis.colorScale = d3.scalePow()
@@ -286,6 +310,9 @@ class WorldMap {
                         });
                         
                         if (matchedLocation) {
+                            // Update the left panel with the location information
+                            vis.updateLeftPanel(matchedLocation);
+                            
                             // Log data to console
                             console.log(`Country: ${matchedLocation.name}`);
                             console.log(`Universities: ${matchedLocation.universities.length}`);
@@ -296,6 +323,9 @@ class WorldMap {
                             console.log(`Research Score: ${matchedLocation.scores_research}`);
                             console.log(`Citations Score: ${matchedLocation.scores_citations}`);
                             console.log(`Universities: ${matchedLocation.universities.join(', ')}`);
+                        } else {
+                            // Hide the left panel if no data is available
+                            vis.leftPanel.style("opacity", "0");
                         }
                     });
                 
@@ -377,5 +407,112 @@ class WorldMap {
                 })
         );
     }
-}
 
+    // Method to update the left panel with location information
+    updateLeftPanel(location) {
+        const vis = this;
+        
+        // Update the panel title
+        vis.leftPanel.select(".panel-title")
+            .text(location.name);
+        
+        // Clear previous content
+        vis.scoreContainer.html("");
+        
+        // Create a score bar for each metric
+        const metrics = [
+            { name: "Teaching", score: location.scores_teaching, color: "#fb6a4a" },
+            { name: "Research", score: location.scores_research, color: "#ef3b2c" },
+            { name: "Citations", score: location.scores_citations, color: "#cb181d" },
+            { name: "Industry Income", score: location.scores_industry_income, color: "#a50f15" },
+            { name: "International Outlook", score: location.scores_international_outlook, color: "#67000d" }
+        ];
+        
+        // Add university count
+        vis.scoreContainer.append("div")
+            .attr("class", "university-count")
+            .style("margin-bottom", "20px")
+            .style("font-size", "18px")
+            .style("font-weight", "bold")
+            .html(`<span style="color: #333;">Universities:</span> <span style="color: #cb181d;">${location.universities.length}</span>`);
+        
+        // Add overall score
+        vis.scoreContainer.append("div")
+            .attr("class", "overall-score")
+            .style("margin-bottom", "20px")
+            .style("font-size", "18px")
+            .style("font-weight", "bold")
+            .html(`<span style="color: #333;">Overall Score:</span> <span style="color: #cb181d;">${location.scores_overall.toFixed(0)}</span>`);
+        
+        // Add percent of max
+        const percentOfMax = (location.scores_overall / vis.maxScore * 100).toFixed(1);
+        vis.scoreContainer.append("div")
+            .attr("class", "percent-max")
+            .style("margin-bottom", "30px")
+            .style("font-size", "18px")
+            .style("font-weight", "bold")
+            .html(`<span style="color: #333;">Percent of Max:</span> <span style="color: #cb181d;">${percentOfMax}%</span>`);
+        
+        // Add a title for the detailed scores
+        vis.scoreContainer.append("h3")
+            .style("margin-top", "0")
+            .style("margin-bottom", "15px")
+            .style("font-size", "18px")
+            .text("Detailed Scores");
+        
+        // Create a container for the score bars
+        const scoreBarContainer = vis.scoreContainer.append("div")
+            .attr("class", "score-bars")
+            .style("display", "flex")
+            .style("flex-direction", "column")
+            .style("gap", "15px");
+        
+        // Add each metric as a score bar
+        metrics.forEach(metric => {
+            const scoreBar = scoreBarContainer.append("div")
+                .attr("class", "score-bar")
+                .style("display", "flex")
+                .style("flex-direction", "column")
+                .style("gap", "5px");
+            
+            // Add the metric name and score
+            scoreBar.append("div")
+                .attr("class", "metric-name")
+                .style("display", "flex")
+                .style("justify-content", "space-between")
+                .html(`
+                    <span>${metric.name}</span>
+                    <span>${metric.score.toFixed(0)}</span>
+                `);
+            
+            // Add the bar
+            const barContainer = scoreBar.append("div")
+                .attr("class", "bar-container")
+                .style("width", "100%")
+                .style("height", "10px")
+                .style("background-color", "#f0f0f0")
+                .style("border-radius", "5px")
+                .style("overflow", "hidden");
+            
+            // Calculate the width of the bar based on the score
+            const maxScore = d3.max(metrics, d => d.score);
+            const barWidth = (metric.score / maxScore * 100).toFixed(0);
+            
+            // Add the colored bar
+            barContainer.append("div")
+                .attr("class", "bar")
+                .style("width", `${barWidth}%`)
+                .style("height", "100%")
+                .style("background-color", metric.color)
+                .style("border-radius", "5px");
+        });
+        
+        // Force the panel to be visible
+        vis.leftPanel
+            .style("opacity", "1")
+            .style("left", "30px")
+            .style("top", "50%")
+            .style("transform", "translateY(-50%)")
+            .style("z-index", "100");
+    }
+}

@@ -640,3 +640,77 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 12px;
     fill: #333;
 }
+
+/* Left panel styles for country information */
+.left-panel {
+    z-index: 10;
+    max-height: 70vh;
+    overflow-y: auto;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    position: absolute;
+    left: 30px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    background-color: rgba(255, 255, 255, 0.95);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    width: 30%;
+    max-width: 400px;
+}
+
+.panel-title {
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    margin-top: 0;
+    margin-bottom: 15px;
+    font-size: 24px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.university-count, .overall-score, .percent-max {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.university-count span, .overall-score span, .percent-max span {
+    color: #cb181d;
+}
+
+.score-container h3 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 18px;
+    color: #333;
+}
+
+.score-bar {
+    margin-bottom: 15px;
+}
+
+.metric-name {
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    color: #333;
+    display: flex;
+    justify-content: space-between;
+}
+
+.bar-container {
+    position: relative;
+    height: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.bar {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    transition: width 0.5s ease;
+}
