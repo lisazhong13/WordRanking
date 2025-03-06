@@ -104,8 +104,14 @@ class WorldMap {
     initVis() {
         const vis = this;
         
-        // Set page title
-        d3.select("#page4 .main-title").text("Global University Rankings");
+        // Modify the page title - make it smaller and move it to top-left
+        d3.select("#page4 .main-title")
+            .text("Global University Rankings")
+            .style("font-size", "36px")  // Smaller font size
+            .style("position", "absolute")
+            .style("top", "20px")
+            .style("left", "20px")
+            .style("margin", "0");
         
         // Create SVG drawing area
         vis.svg = d3.select("#" + vis.containerId)
@@ -138,6 +144,9 @@ class WorldMap {
         // Create path generator
         vis.path = d3.geoPath()
             .projection(vis.projection);
+        
+        // Create legend first (so it appears behind the globe)
+        vis.createLegend();
         
         // Load world map data
         d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
@@ -287,9 +296,6 @@ class WorldMap {
                         }
                     });
                 
-                // Create legend
-                vis.createLegend();
-                
                 // Make the globe draggable/rotatable
                 vis.makeGlobeDraggable();
             })
@@ -301,10 +307,10 @@ class WorldMap {
     createLegend() {
         const vis = this;
         
-        // Create legend group
+        // Create legend group - Position it at the bottom of the visualization
         vis.legend = vis.svg.append("g")
             .attr('class', 'legend')
-            .attr('transform', `translate(${vis.width * 3 / 4}, ${vis.height - 30})`);
+            .attr('transform', `translate(${vis.width / 2 - 100}, ${vis.height - 30})`);
         
         // Create sample points for the legend
         const samplePoints = [];
@@ -325,10 +331,11 @@ class WorldMap {
             .tickSize(0);
         
         // Create legend rectangles
-        vis.legend.selectAll("rect")
+        vis.legend.selectAll(".legend-rect")
             .data(vis.colors)
             .enter()
             .append("rect")
+            .attr("class", "legend-rect")
             .attr("x", (d, i) => i * (200 / vis.colors.length))
             .attr("width", 200 / vis.colors.length)
             .attr("height", 10)

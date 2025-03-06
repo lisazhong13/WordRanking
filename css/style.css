@@ -565,6 +565,12 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0 auto;
 }
 
+/* Adjust the title for the worldmap page */
+#page4 .main-title {
+    z-index: 10;
+    text-shadow: 1px 1px 3px rgba(255, 255, 255, 0.8);
+}
+
 #worldmap-tooltip {
     position: absolute;
     background: rgba(240, 240, 240, 0.9);
@@ -605,6 +611,17 @@ h1, h2, h3, h4, h5, h6 {
     z-index: 100;
 }
 
+/* Ensure the legend is behind the globe */
+.legend {
+    z-index: 1;
+}
+
+/* Ensure the globe is above the legend */
+.globe-group {
+    cursor: grab;
+    z-index: 5;
+}
+
 .country {
     cursor: pointer;
     transition: stroke 0.2s, stroke-width 0.2s;
@@ -617,10 +634,6 @@ h1, h2, h3, h4, h5, h6 {
 .ocean {
     cursor: grab;
     pointer-events: all;
-}
-
-.globe-group {
-    cursor: grab;
 }
 
 .legend text {
