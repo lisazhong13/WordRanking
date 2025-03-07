@@ -207,6 +207,8 @@ function setupIntersectionObserver() {
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
+            console.log(`Page ${entry.target.id} intersection:`, entry.isIntersecting);
+            
             if (entry.target.id === 'page2') {
                 const imageContainer = document.querySelector('.intro-image-container');
                 const textContainer = document.querySelector('.intro-text-container');
@@ -248,17 +250,20 @@ function setupIntersectionObserver() {
                 }
             }
             
-            if (entry.isIntersecting) {
-                console.log("16. Page intersecting:", entry.target.id);
-                if (entry.target.id === 'page6' && scatterplot) {
-                    console.log("17. Triggering scatterplot render");
-                    scatterplot.render();
+            if (entry.target.id === 'page6') {
+                if (entry.isIntersecting) {
+                    console.log("Rendering scatterplot");
+                    if (scatterplot) {
+                        scatterplot.render();
+                    } else {
+                        console.error("Scatterplot instance not found");
+                    }
                 }
             }
         });
     }, options);
 
-    // Start observing all pages
+    // 确保观察所有页面
     document.querySelectorAll('.page').forEach(page => {
         observer.observe(page);
     });
