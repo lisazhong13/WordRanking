@@ -44,7 +44,13 @@ class Scatterplot {
             };
         });
         
-        this.initVis();
+        this.clearChart(); // Clear any existing content
+        this.initVis(); // Initialize visualization
+    }
+
+    clearChart() {
+        // Clear existing content in the scatterplot container
+        d3.select("#" + this.containerId).selectAll("*").remove();
     }
 
     initVis() {

@@ -4,6 +4,7 @@ const yearParser = d3.timeParse("%Y");
 
 // Global visualization instances
 let worldMap, timeline, scatterplot, barChart, radarChart;
+let scatterplotInitialized = false; // Flag to track scatterplot initialization
 
 // (1) Load data with promises
 let promises = [
@@ -44,7 +45,12 @@ Promise.all(promises)
         barChart = new BarChart("bar-chart-canvas", rankingData);
         radarChart = new RadarChart("radar-chart-canvas", rankingData);
         timeline = new Timeline("timeline-chart", rankingData);
-        scatterplot = new Scatterplot("scatterplot-chart", rankingData);
+        
+        // Initialize scatterplot only if it hasn't been initialized
+        if (!scatterplotInitialized) {
+            scatterplot = new Scatterplot("scatterplot-chart", rankingData);
+            scatterplotInitialized = true; // Set the flag to true after initialization
+        }
 
         barChart.updateChart();
         radarChart.updateChart();
