@@ -1313,16 +1313,111 @@ canvas {
 
 #page5 .content-wrapper {
     width: 100%;
-    height: 100%;
+    height: 100vh;
     margin: 0;
-    padding: 0;
-    background-color: white; 
-    box-shadow: none; 
-    border-radius: 0; 
+    padding: 20px;
+    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+#page5 .chart-wrapper {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.line-chart-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background-color: white;
+    display: flex;
+}
+
+#line-chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.chart-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.chart-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Line chart specific styles */
+.line {
+    fill: none;
+    stroke-width: 2;
+    transition: stroke-width 0.2s ease, opacity 0.2s ease;
+}
+
+.line:hover {
+    stroke-width: 4;
+}
+
+/* Legend styles */
+.legend {
+    font-size: 12px;
+}
+
+.legend text {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    dominant-baseline: middle;
+    text-anchor: start;
+}
+
+/* University info panel */
+.university-info {
+    background: white;
+    border-left: 1px solid #eee;
+    padding: 20px;
+    overflow-y: auto;
+    font-family: 'Lora', serif;
+    height: 100%;
+}
+
+.university-info h2 {
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.university-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.university-info th,
+.university-info td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.university-info th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.university-info tr:hover {
+    background-color: #f8f9fa;
 }
 
 #page7 {
@@ -1681,35 +1776,6 @@ canvas {
     padding-bottom: 10px;
 }
 
-/* Score Bar Styles */
-.score-bar {
-    margin-bottom: 15px;
-}
-
-.metric-name {
-    font-size: 14px;
-    font-weight: 500;
-    margin-bottom: 5px;
-    color: #333;
-    display: flex;
-    justify-content: space-between;
-}
-
-.bar-container {
-    position: relative;
-    height: 8px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.bar {
-    position: absolute;
-    left: 0;
-    top: 0;
-    height: 100%;
-    transition: width 0.5s ease;
-}
 
 /* Canvas Styles */
 canvas {
@@ -1745,4 +1811,210 @@ canvas {
 #scatterplot-chart svg {
     width: 100%;
     height: 100%;
+}
+
+#timeline-chart {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.timeline-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 10;
+    background: white;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.timeline-controls select {
+    margin-right: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.trend-line {
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.trend-line.selected {
+    stroke-width: 4;
+    opacity: 1;
+}
+
+.university-info {
+    background: white;
+    border-left: 1px solid #eee;
+    overflow: hidden;
+    transition: width 0.3s ease;
+}
+
+.line-chart-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#line-chart {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+}
+
+/* Remove timeline-specific styles */
+#timeline-chart {
+    display: none;
+}
+
+.line {
+    fill: none;
+    stroke-width: 2;
+    transition: stroke-width 0.2s ease, opacity 0.2s ease;
+}
+
+.line:hover {
+    stroke-width: 4;
+}
+
+.metric-selector {
+    position: absolute;
+    top: 10;
+    left: 460px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: white;
+    font-family: 'Lora', serif;
+    z-index: 10;
+}
+
+.tooltip {
+    position: absolute;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    pointer-events: none;
+    font-size: 14px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.chart-title, .x-axis-label, .y-axis-label {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+}
+
+.x-axis text, .y-axis text {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+}
+
+.legend text {
+    font-family: 'Lora', serif;
+    font-size: 12px;
+    alignment-baseline: middle;
+}
+
+.university-info {
+    background: white;
+    border-left: 1px solid #eee;
+    padding: 0;
+    overflow-y: auto;
+    font-family: 'Lora', serif;
+}
+
+.university-info h2 {
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid #eee;
+}
+
+.university-info h3 {
+    font-family: 'Playfair Display', serif;
+    color: #333;
+    margin: 20px 0 15px;
+}
+
+.university-info p {
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+.university-info table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.university-info th,
+.university-info td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.university-info th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+}
+
+.university-info tr:hover {
+    background-color: #f8f9fa;
+}
+
+/* Ensure the chart container takes full height */
+#page5 .content-wrapper {
+    padding: 0;
+    height: 100vh;
+}
+
+.chart-container {
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Style for the SVG container */
+.chart-container svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* Ensure legend text is fully visible */
+.legend text {
+    font-size: 12px;
+    dominant-baseline: middle;
+    text-anchor: start;
+}
+
+/* 在 CSS 中添加 */
+.selectors-container {
+    left: 50% !important;
+    width: auto !important;
+    min-width: 600px;
+    display: flex !important;
+    justify-content: center;
+    top: 20px !important;
+}
+
+.selectors-container select {
+    flex-shrink: 0;
+}
+
+.selectors-container label {
+    white-space: nowrap;
 }

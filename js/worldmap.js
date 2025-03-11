@@ -508,4 +508,35 @@ class WorldMap {
             .style("transform", "none")
             .style("z-index", "100");
     }
+
+    render() {
+        const vis = this;
+        
+        // Update dimensions
+        vis.width = vis.container.clientWidth - vis.margin.left - vis.margin.right;
+        vis.height = vis.container.clientHeight - vis.margin.top - vis.margin.bottom;
+
+        // Update SVG dimensions
+        vis.svg
+            .attr("width", vis.width + vis.margin.left + vis.margin.right)
+            .attr("height", vis.height + vis.margin.top + vis.margin.bottom);
+
+        // Update projection
+        vis.projection
+            .translate([vis.width / 2, vis.height / 2])
+            .scale(Math.min(vis.width, vis.height) * 0.4);
+
+        // Update all paths with new projection
+        vis.svg.select(".ocean")
+            .attr("d", vis.path);
+
+        vis.svg.select(".graticule")
+            .attr("d", vis.path);
+
+        vis.svg.selectAll(".country")
+            .attr("d", vis.path);
+
+        // Update legend position if needed
+        this.createLegend();
+    }
 }
