@@ -131,7 +131,7 @@ class LineChart {
 
         // Create rank range selector
         const rankRanges = [];
-        for (let i = 1; i <= 100; i += 10) {
+        for (let i = 1; i <= 200; i += 10) {
             rankRanges.push(`${i}-${i + 9}`);
         }
 
@@ -163,6 +163,9 @@ class LineChart {
             .append("option")
             .attr("value", d => d)
             .text(d => d);
+
+        // Initialize with first range
+        vis.selectedRankRange = rankRanges[0];
 
         // Create metric selector
         const metrics = [
